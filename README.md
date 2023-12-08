@@ -8,7 +8,36 @@ ADAPTT is built on top of AMD/Xilinx's [FINN](https://github.com/Xilinx/finn/) a
 
 This repository uses the classification tasks from the [ISCX VPN-nonVPN dataset](https://www.cs.unb.ca/research-expo/expos/2016/submissions/Mohammad%20Mamun_msi.mamun@unb.ca_VPNCharacterization-UNBExpo2016.pdf)[^1]
 
-##### The basic structure of ADAPTT is:
+#### Usage examples:
+1. python3 train.py --num_classes 2 --epochs 500 --bitwidth 4
+	
+	*Trains the use case CNN for 500 epochs on the binary classification task (i.e., VPN or Non-VPN) with a quantization of --bitwidth*
+
+2. python3 train.py --num_classes 2 --prune --pruning_rate 0.25 --retrain --epochs 5 --folding_cfg folding_cfgs/default_folding_2.json --pretrained experiments/vpn_2_classes_4_bits_/checkpoints/best.tar --export experiments/pruned.onnx
+
+	*Prunes the --pretrained model at 25% pruning rate considering the an accelerator with the folding specified in --folding_cfg. Then, retrains the pruned model for 50 epochs*
+
+3. python3 train.py --num_classes 2 --pretrained experiments/vpn_2_classes_4_bits_/checkpoints/best.tar --export experiments/vpn_2_classes_4_bits_/checkpoints/best.onnx
+	
+	*Loads the --pretrained trained CNN and exports it to an ONNX file (specified in --export)*
+
+
+
+##### When using ADAPTT, please cite the following work:
+```latex
+@InProceedings{Vicenzi2023,
+author="Vicenzi, Julio Costella and Korol, Guilherme and Jordan, Michael Guilherme and Rutzig, Mateus Beck and Filho, Antonio Carlos Schneider Beck",
+editor="Barolli, Leonard",
+title="Adaptive Inference on Reconfigurable SmartNICs for Traffic Classification",
+booktitle="Advanced Information Networking and Applications",
+year="2023",
+publisher="Springer International Publishing",
+pages="137--148",
+isbn="978-3-031-28451-9"
+}
+```
+
+#### The basic structure of ADAPTT is:
 * /data 
 	* /VPN -- *Where the VPN-nonVPN dataset is placed*
 
@@ -25,19 +54,6 @@ This repository uses the classification tasks from the [ISCX VPN-nonVPN dataset]
 * quantizers.py -- *Holds some auxiliary Brevitas code*
 
 * vpn_dataset -- *Implements the necessary code for loading the VPN dataset*
-
-##### Some examples:
-1. python3 train.py --num_classes 2 --epochs 500
-	
-	*Trains the use case CNN for 500 epochs on the binary classification task (i.e., VPN or Non-VPN)*
-
-2. python3 train.py --num_classes 2 --prune --pruning_rate 0.25 --retrain --epochs 5 --folding_cfg folding_cfgs/default_folding_2.json --pretrained experiments/vpn_2_classes_4_bits_/checkpoints/best.tar --export experiments/pruned.onnx
-
-	*Prunes the --pretrained model at 25% pruning rate considering the an accelerator with the folding specified in --folding_cfg. Then, retrains the pruned model for 50 epochs*
-
-3. python3 train.py --num_classes 2 --pretrained experiments/vpn_2_classes_4_bits_/checkpoints/best.tar --export experiments/vpn_2_classes_4_bits_/checkpoints/best.onnx
-	
-	*Loads the --pretrained trained CNN and exports it to an ONNX file (specified in --export)*
 
 
 [^0]: Some CNN training code (e.g., training iteration, exporting, logging) was leveraged as is from the available FINN/Brevitas examples.
