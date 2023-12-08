@@ -1,0 +1,35 @@
+{
+  "Defaults": {},
+  "StreamingFCLayer_Batch_0": {
+    "PE": 4,
+    "SIMD": 5,
+    "ram_style": "auto",
+    "resType": "lut",
+    "mem_mode": "decoupled",
+    "runtime_writeable_weights": 0
+  },
+  "StreamingFCLayer_Batch_1": {
+    "PE": 8,
+    "SIMD": 4,
+    "ram_style": "auto",
+    "resType": "lut",
+    "mem_mode": "decoupled",
+    "runtime_writeable_weights": 0
+  },
+  "StreamingFCLayer_Batch_2": {
+    "PE": 32,
+    "SIMD": 8,
+    "ram_style": "auto",
+    "resType": "lut",
+    "mem_mode": "decoupled",
+    "runtime_writeable_weights": 0
+  },
+  "StreamingFCLayer_Batch_3": {
+    "PE": 2,
+    "SIMD": 32,
+    "ram_style": "auto",
+    "resType": "lut",
+    "mem_mode": "decoupled",
+    "runtime_writeable_weights": 0
+  }
+}
